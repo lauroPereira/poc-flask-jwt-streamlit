@@ -1,6 +1,7 @@
 from flask import Flask
 from config import Config
 from models import db
+from controllers.ui_controller import ui_bp
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +11,8 @@ def create_app():
 
     # Configurar secret key para session
     app.config['SECRET_KEY'] = Config.SECRET_KEY
+    
+    app.register_blueprint(ui_bp)
 
     return app
 
