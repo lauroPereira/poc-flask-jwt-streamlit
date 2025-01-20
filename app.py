@@ -1,7 +1,7 @@
 from flask import Flask
 from config import Config
 from models import db
-from controllers.ui_controller import ui_bp
+from controllers.auth_controller import ui_bp
 
 def create_app():
     app = Flask(__name__)
