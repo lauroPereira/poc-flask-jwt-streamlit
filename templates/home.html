@@ -3,42 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <style>
-        /* Exemplos de estilo inline para o layout de menu lateral */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #f4f4f4;
-            padding: 1rem;
-            height: 100vh; /* forçar altura da tela completa */
-            box-sizing: border-box;
-        }
-        .sidebar hr {
-            margin: 1rem 0;
-        }
-        .sidebar ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-        .content {
-            flex: 1;
-            padding: 1rem;
-        }
-        .logout-link {
-            display: block;
-            margin-top: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
@@ -46,7 +11,7 @@
             <!-- Nome do usuário logado -->
             <p>Usuário: {{ username }}</p>
             <!-- Email do usuário logado -->
-            <p>e-mail: {{ email }}</p>
+            <p>{{ email }}</p>
             <hr>
             
             <!-- Menu baseado na role -->
