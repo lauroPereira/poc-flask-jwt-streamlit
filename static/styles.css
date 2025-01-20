@@ -1,4 +1,4 @@
-/* Exemplos de estilo inline para o layout de menu lateral */
+/* Exemplo de estilo inline para layout de menu lateral */
 body {
     margin: 0;
     padding: 0;
@@ -11,18 +11,11 @@ body {
     width: 200px;
     background-color: #f4f4f4;
     padding: 1rem;
-    height: 100vh; /* forçar altura da tela completa */
+    height: 100vh; /* Força a sidebar a ter a altura da janela */
     box-sizing: border-box;
 }
 .sidebar hr {
     margin: 1rem 0;
-}
-.sidebar ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-.sidebar li {
-    margin-bottom: 0.5rem;
 }
 .content {
     flex: 1;
@@ -32,7 +25,30 @@ body {
     display: block;
     margin-top: 1rem;
 }
-
-ul li {
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+.sidebar ul li {
+    margin-bottom: 0.5rem;
     cursor: pointer;
+}
+.sidebar p {
+    margin: 0.5rem 0;
+}
+
+/* Estilo para o logo */
+.logo {
+    display: block;              /* Torna o <img> um elemento de bloco */
+    margin: 1rem auto;          /* Centraliza e adiciona margem acima/abaixo */
+    width: 90px;
+    height: 30px;
+    border-radius: 6px;         /* Cantos arredondados */
+    object-fit: cover;          /* Ajusta imagem, caso não seja nessa proporção */
+    background-color: rgb(50, 50, 50, 0.6);
+    padding: 20px;
+}
+
+#username {
+    margin-top: 50px;
 }
