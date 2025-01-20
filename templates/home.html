@@ -3,10 +3,88 @@
 <head>
     <meta charset="utf-8">
     <title>Home</title>
+    <style>
+        /* Exemplos de estilo inline para o layout de menu lateral */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 1rem;
+            height: 100vh; /* forçar altura da tela completa */
+            box-sizing: border-box;
+        }
+        .sidebar hr {
+            margin: 1rem 0;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        .content {
+            flex: 1;
+            padding: 1rem;
+        }
+        .logout-link {
+            display: block;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>Você está logado!</p>
-    <a href="{{ url_for('ui_bp.logout') }}">Logout</a>
+    <div class="container">
+        <div class="sidebar">
+            <!-- Nome do usuário logado -->
+            <p>Usuário: {{ username }}</p>
+            <!-- Email do usuário logado -->
+            <p>e-mail: {{ email }}</p>
+            <hr>
+            
+            <!-- Menu baseado na role -->
+            {% if role == 'aluno' %}
+                <ul>
+                    <li>Minhas matrículas</li>
+                    <li>Editar perfil</li>
+                </ul>
+            {% elif role == 'professor' %}
+                <ul>
+                    <li>Minhas turmas</li>
+                    <li>Matriculas</li>
+                    <li>Editar perfil</li>
+                </ul>
+            {% elif role == 'adm' %}
+                <ul>
+                    <li>turmas</li>
+                    <li>professores</li>
+                    <li>alunos</li>
+                    <li>matrículas</li>
+                    <li>usuários</li>
+                    <li>Editar perfil</li>
+                </ul>
+            {% else %}
+                <!-- Caso queira tratar outras roles ou padrão -->
+                <p>Sem opções de menu para esta role.</p>
+            {% endif %}
+
+            <hr>
+            <!-- Exibe a role do usuário -->
+            <p><strong>{{ role }}</strong></p>
+            <a class="logout-link" href="{{ url_for('ui_bp.logout') }}">Logout</a>
+        </div>
+        <div class="content">
+            <h1>Hello World!</h1>
+            <p>Bem-vindo ao sistema. Aqui é o conteúdo principal.</p>
+            
+        </div>
+    </div>
 </body>
 </html>

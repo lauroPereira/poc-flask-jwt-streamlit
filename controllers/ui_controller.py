@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from services.auth_service import AuthService
+from models import db
+from models.user_model import User
 
 ui_bp = Blueprint('ui_bp', __name__)
 
@@ -8,11 +10,21 @@ def home():
     """
     Página inicial após login bem-sucedido.
     Se não estiver logado, redireciona para /login.
+    Caso contrário retorna os dados de username, email e role para a página home
     """
+    
     if 'user_id' not in session:
         return redirect(url_for('ui_bp.login'))
-    # Se estiver logado, exibe Hello World
-    return render_template('home.html')
+    
+    user = User.query.get(session['user_id'])
+    
+    if not user:
+        return redirect(url_for('ui_bp.logout'))
+
+    return render_template('home.html', 
+                           username=user.username, 
+                           email=user.email, 
+                           role=user.role)
 
 @ui_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -20,6 +32,7 @@ def login():
     Exibe tela de login (GET).
     Tenta autenticar usuário (POST).
     """
+    
     if request.method == 'GET':
         return render_template('login.html')
 
@@ -32,9 +45,11 @@ def login():
 
     user = AuthService.authenticate_user(username, password)
     if user:
-        # Salvamos na sessão
+        # Salvamos dados na sessão
         session['user_id'] = user.id
         session['username'] = user.username
+        session['email'] = user.email
+        session['role'] = user.role
         return redirect(url_for('ui_bp.home'))
     else:
         return "Credenciais inválidas", 401
@@ -57,17 +72,23 @@ def register():
 
     # POST
     username = request.form.get('username')
+    email = request.form.get('email')
     password = request.form.get('password')
+    role = request.form.get('role')  # 'aluno', 'professor', 'adm', etc.
 
-    if not username or not password:
+    if not all([username, email, password, role]):
         return "Dados incompletos", 400
 
     # Verifica se usuário já existe
-    from models.user_model import User
-    existing = User.query.filter_by(username=username).first()
-    if existing:
-        return "Nome de usuário já está em uso", 400
+    existing_username = User.query.filter_by(username=username).first()
+    if existing_username:
+        return "Nome de usuário já em uso", 400
+    
+    # Verifica se o e-mail já existe
+    existing_email = User.query.filter_by(email=email).first()
+    if existing_email:
+        return "E-mail já em uso", 400
 
     # Cria usuário
-    AuthService.create_user(username, password)
+    AuthService.create_user(username, email, password, role)
     return redirect(url_for('ui_bp.login'))
