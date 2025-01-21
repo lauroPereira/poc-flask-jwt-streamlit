@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p><a href="{{ url_for('ui_bp.index') }}">home</a> > professores</p>
+<h2>Lista de Professores</h2>
+
+<a href="{{ url_for('teacher_bp.teachers_new') }}">Adicionar Novo Professor</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if teachers and teachers|length > 0 %}
+        {% for t in teachers %}
+        <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.nome }}</td>
+            <td>{{ t.email }}</td>
+            <td>
+                <a href="{{ url_for('teacher_bp.teachers_edit', teacher_id=t.id) }}">Editar</a>
+                
+                <!-- Excluir via POST -->
+                <form method="POST" 
+                      action="{{ url_for('teacher_bp.teachers_delete', teacher_id=t.id) }}"
+                      style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+
+                <!-- Opcional: ver as turmas do professor -->
+                <a href="{{ url_for('teacher_bp.teachers_courses', teacher_id=t.id) }}">
+                    Turmas
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4" style="text-align:center;">
+                Nenhum professor encontrado.
+            </td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

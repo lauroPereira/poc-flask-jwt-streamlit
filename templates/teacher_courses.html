@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p><a href="{{ url_for('ui_bp.index') }}">home</a> > <a href="{{ url_for('teacher_bp.teachers_list') }}">professores</a> > turmas do professor</p>
+<h2>Turmas de {{ teacher.nome }}</h2>
+
+{% if teacher.courses and teacher.courses|length > 0 %}
+    <ul>
+    {% for c in teacher.courses %}
+        <li>{{ c.nome }} - {{ c.descricao }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nenhuma turma associada a este professor.</p>
+{% endif %}
+{% endblock %}
