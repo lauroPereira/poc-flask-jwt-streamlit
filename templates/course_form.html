@@ -17,8 +17,18 @@
 
     <label for="descricao">Descrição:</label><br>
     <textarea id="descricao" name="descricao" rows="5" cols="40">{{ course.descricao if course else '' }}</textarea>
+    <label for="teacher_id">Professor:</label><br>
+    <select id="teacher_id" name="teacher_id">
+        <option value="">--Nenhum--</option>
+        {% for t in teachers %}
+            <option value="{{ t.id }}"
+                {% if course and course.teacher_id == t.id %}selected{% endif %}
+            >
+                {{ t.nome }}
+            </option>
+        {% endfor %}
+    </select>
     <br><br>
-
     <button type="submit">
         {% if action == 'new' %}Criar{% else %}Salvar Alterações{% endif %}
     </button>
