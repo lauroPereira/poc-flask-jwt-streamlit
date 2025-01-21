@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% if action == 'new' %}
+    <p><a href="{{ url_for('ui_bp.index') }}">home</a> > <a href="{{ url_for('course_bp.adm_courses_list') }}">turmas</a> > adicionar nova turma</p>
+    <h2>Adicionar Turma</h2>
+{% elif action == 'edit' %}
+    <p>home > <a href="{{ url_for('course_bp.adm_courses_list') }}">turmas</a> > editar turma</p>
+    <h2>Editar Turma</h2>
+{% endif %}
+
+<form method="POST">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome" 
+           value="{% if course %}{{ course.nome }}{% endif %}" 
+           required><br><br>
+
+    <label for="descricao">Descrição:</label><br>
+    <textarea id="descricao" name="descricao" rows="5" cols="40">{{ course.descricao if course else '' }}</textarea>
+    <br><br>
+
+    <button type="submit">
+        {% if action == 'new' %}Criar{% else %}Salvar Alterações{% endif %}
+    </button>
+</form>
+{% endblock %}

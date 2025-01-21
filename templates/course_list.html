@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<p><a href="{{ url_for('ui_bp.index') }}">home</a> > turmas</p>
+<h2>Lista de Turmas</h2>
+
+<a href="{{ url_for('course_bp.adm_courses_new') }}">Adicionar Nova Turma</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if courses and courses|length > 0 %}
+        {% for c in courses %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.nome }}</td>
+            <td>{{ c.descricao }}</td>
+            <td>
+                <!-- Botão Editar -->
+                <a href="{{ url_for('course_bp.adm_courses_edit', course_id=c.id) }}">Editar</a>
+                
+                <!-- Botão Excluir (formulário POST) -->
+                <form method="POST" 
+                      action="{{ url_for('course_bp.adm_courses_delete', course_id=c.id) }}"
+                      style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4" style="text-align:center;">
+                Nenhuma turma encontrada.
+            </td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,62 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <div class="sidebar">
+{% extends 'layout.html' %}
 
-            <!-- Logo -->
-            <img class="logo" 
-                 src="{{ url_for('static', filename='logo.png') }}" 
-                 alt="Logo da Plataforma EAD">
-
-            <!-- Nome do usuário logado -->
-            <p id="username">{{ username }}</p>
-
-            <!-- Email do usuário logado -->
-            <p id="email">{{ email }}</p>
-            <hr>
-            
-            <!-- Menu baseado na role -->
-            {% if role == 'aluno' %}
-                <ul>
-                    <li>Minhas matrículas</li>
-                    <li>Editar perfil</li>
-                </ul>
-            {% elif role == 'professor' %}
-                <ul>
-                    <li>Minhas turmas</li>
-                    <li>Matriculas</li>
-                    <li>Editar perfil</li>
-                </ul>
-            {% elif role == 'adm' %}
-                <ul>
-                    <li>turmas</li>
-                    <li>professores</li>
-                    <li>alunos</li>
-                    <li>matrículas</li>
-                    <li>usuários</li>
-                    <li>Editar perfil</li>
-                </ul>
-            {% else %}
-                <!-- Caso queira tratar outras roles ou padrão -->
-                <p>Sem opções de menu para esta role.</p>
-            {% endif %}
-
-            <hr>
-            <!-- Exibe a role do usuário -->
-            <p>Função: <strong>{{ role }}</strong></p>
-            <a class="logout-link" href="{{ url_for('ui_bp.logout') }}">Logout</a>
-        </div>
-        <div class="content">
-            <h1>Hello World!</h1>
-            <p>Bem-vindo ao sistema. Aqui é o conteúdo principal.</p>
-            
-        </div>
-    </div>
-</body>
-</html>
+{% block content %}
+<h1>Hello World!</h1>
+<p>Bem-vindo ao sistema. Aqui é o conteúdo principal.</p>
+{% endblock %}
