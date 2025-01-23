@@ -11,8 +11,8 @@ def check_adm_role():
     return session.get('role') == 'adm'
 
 
-@course_bp.route('/adm/courses', methods=['GET'])
-def adm_courses_list():
+@course_bp.route('/courses', methods=['GET'])
+def courses_list():
     """
     Lista todas as turmas, com botões de Adicionar, Editar, Excluir.
     Somente 'adm' pode acessar.
@@ -25,8 +25,8 @@ def adm_courses_list():
     return render_template('course_list.html', courses=courses)
 
 
-@course_bp.route('/adm/courses/new', methods=['GET', 'POST'])
-def adm_courses_new():
+@course_bp.route('/courses/new', methods=['GET', 'POST'])
+def courses_new():
     """
     Página para adicionar nova turma.
     - GET: exibe o formulário vazio.
@@ -47,11 +47,11 @@ def adm_courses_new():
         return "Nome é obrigatório", 400
 
     CourseService.create_course(nome, descricao)
-    return redirect(url_for('course_bp.adm_courses_list'))
+    return redirect(url_for('course_bp.courses_list'))
 
 
-@course_bp.route('/adm/courses/<int:course_id>/edit', methods=['GET', 'POST'])
-def adm_courses_edit(course_id):
+@course_bp.route('/courses/<int:course_id>/edit', methods=['GET', 'POST'])
+def courses_edit(course_id):
     """
     Página para editar os dados da turma.
     - GET: exibe formulário pré-preenchido.
@@ -76,11 +76,11 @@ def adm_courses_edit(course_id):
         return "Nome é obrigatório", 400
 
     CourseService.update_course(course_id, nome, descricao)
-    return redirect(url_for('course_bp.adm_courses_list'))
+    return redirect(url_for('course_bp.courses_list'))
 
 
-@course_bp.route('/adm/courses/<int:course_id>/delete', methods=['POST'])
-def adm_courses_delete(course_id):
+@course_bp.route('/courses/<int:course_id>/delete', methods=['POST'])
+def courses_delete(course_id):
     """
     A rota 'POST' para excluir a turma.
     Ao excluir, redirecionamos de volta para a lista.
@@ -92,4 +92,4 @@ def adm_courses_delete(course_id):
     if not deleted:
         return "Turma não encontrada", 404
 
-    return redirect(url_for('course_bp.adm_courses_list'))
+    return redirect(url_for('course_bp.courses_list'))

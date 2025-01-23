@@ -9,7 +9,7 @@ teacher_bp = Blueprint('teacher_bp', __name__)
 def check_adm_role():
     return session.get('role') == 'adm'
 
-@teacher_bp.route('/adm/teachers', methods=['GET'])
+@teacher_bp.route('/teachers', methods=['GET'])
 def teachers_list():
     """
     Lista todos os professores, com botão de Adicionar, Editar, Excluir.
@@ -21,7 +21,7 @@ def teachers_list():
     teachers = TeacherService.list_all_teachers()
     return render_template('teacher_list.html', teachers=teachers)
 
-@teacher_bp.route('/adm/teachers/new', methods=['GET', 'POST'])
+@teacher_bp.route('/teachers/new', methods=['GET', 'POST'])
 def teachers_new():
     """
     Página para adicionar novo professor.
@@ -42,7 +42,7 @@ def teachers_new():
     TeacherService.create_teacher(nome, email)
     return redirect(url_for('teacher_bp.teachers_list'))
 
-@teacher_bp.route('/adm/teachers/<int:teacher_id>/edit', methods=['GET', 'POST'])
+@teacher_bp.route('/teachers/<int:teacher_id>/edit', methods=['GET', 'POST'])
 def teachers_edit(teacher_id):
     """
     Edita dados de um professor existente.
@@ -66,7 +66,7 @@ def teachers_edit(teacher_id):
     TeacherService.update_teacher(teacher_id, nome, email)
     return redirect(url_for('teacher_bp.teachers_list'))
 
-@teacher_bp.route('/adm/teachers/<int:teacher_id>/delete', methods=['POST'])
+@teacher_bp.route('/teachers/<int:teacher_id>/delete', methods=['POST'])
 def teachers_delete(teacher_id):
     """
     Exclui um professor, caso ele exista.
@@ -80,7 +80,7 @@ def teachers_delete(teacher_id):
 
     return redirect(url_for('teacher_bp.teachers_list'))
 
-@teacher_bp.route('/adm/teachers/<int:teacher_id>/courses', methods=['GET'])
+@teacher_bp.route('/teachers/<int:teacher_id>/courses', methods=['GET'])
 def teachers_courses(teacher_id):
     """
     Opcional: Mostra as turmas associadas a um determinado professor

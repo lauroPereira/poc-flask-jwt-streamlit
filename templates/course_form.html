@@ -2,10 +2,10 @@
 
 {% block content %}
 {% if action == 'new' %}
-    <p><a href="{{ url_for('ui_bp.index') }}">home</a> > <a href="{{ url_for('course_bp.adm_courses_list') }}">turmas</a> > adicionar nova turma</p>
+    <p><a href="{{ url_for('ui_bp.index') }}">home</a> > <a href="{{ url_for('course_bp.courses_list') }}">turmas</a> > adicionar nova turma</p>
     <h2>Adicionar Turma</h2>
 {% elif action == 'edit' %}
-    <p><a href="{{ url_for('ui_bp.index') }}">home</a> > <a href="{{ url_for('course_bp.adm_courses_list') }}">turmas</a> > editar turma</p>
+    <p><a href="{{ url_for('ui_bp.index') }}">home</a> > <a href="{{ url_for('course_bp.courses_list') }}">turmas</a> > editar turma</p>
     <h2>Editar Turma</h2>
 {% endif %}
 
@@ -17,6 +17,7 @@
 
     <label for="descricao">Descrição:</label><br>
     <textarea id="descricao" name="descricao" rows="5" cols="40">{{ course.descricao if course else '' }}</textarea>
+    <br><br>
     <label for="teacher_id">Professor:</label><br>
     <select id="teacher_id" name="teacher_id">
         <option value="">--Nenhum--</option>

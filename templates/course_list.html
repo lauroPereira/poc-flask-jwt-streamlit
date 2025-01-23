@@ -5,7 +5,7 @@
 <p><a href="{{ url_for('ui_bp.index') }}">home</a> > turmas</p>
 <h2>Lista de Turmas</h2>
 
-<a href="{{ url_for('course_bp.adm_courses_new') }}">Adicionar Nova Turma</a>
+<a href="{{ url_for('course_bp.courses_new') }}">Adicionar Nova Turma</a>
 
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
@@ -25,11 +25,11 @@
             <td>{{ c.descricao }}</td>
             <td>
                 <!-- Botão Editar -->
-                <a href="{{ url_for('course_bp.adm_courses_edit', course_id=c.id) }}">Editar</a>
+                <a href="{{ url_for('course_bp.courses_edit', course_id=c.id) }}">Editar</a>
                 
                 <!-- Botão Excluir (formulário POST) -->
                 <form method="POST" 
-                      action="{{ url_for('course_bp.adm_courses_delete', course_id=c.id) }}"
+                      action="{{ url_for('course_bp.courses_delete', course_id=c.id) }}"
                       style="display:inline;">
                     <button type="submit">Excluir</button>
                 </form>
