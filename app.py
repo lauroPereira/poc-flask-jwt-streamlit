@@ -4,6 +4,7 @@ from models import db
 from controllers.auth_controller import ui_bp
 from controllers.course_controller import course_bp
 from controllers.teacher_controller import teacher_bp
+from controllers.student_controller import student_bp
 
 def create_app():
     app = Flask(__name__)
@@ -17,6 +18,7 @@ def create_app():
     app.register_blueprint(ui_bp)
     app.register_blueprint(course_bp)
     app.register_blueprint(teacher_bp)
+    app.register_blueprint(student_bp)
     
     @app.context_processor
     def inject_user_data():
