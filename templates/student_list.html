@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p>
+  <a href="{{ url_for('ui_bp.index') }}">home</a> > alunos
+</p>
+<h2>Lista de Alunos</h2>
+
+<a href="{{ url_for('student_bp.students_new') }}">Adicionar Novo Aluno</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if students and students|length > 0 %}
+        {% for s in students %}
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.nome }}</td>
+            <td>{{ s.email }}</td>
+            <td>
+                <a href="{{ url_for('student_bp.students_edit', student_id=s.id) }}">Editar</a>
+                <form method="POST"
+                      action="{{ url_for('student_bp.students_delete', student_id=s.id) }}"
+                      style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4" style="text-align:center;">Nenhum aluno encontrado.</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}
