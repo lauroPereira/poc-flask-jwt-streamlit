@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from services.course_service import CourseService
+from services.teacher_service import TeacherService
 
 course_bp = Blueprint('course_bp', __name__)
 
@@ -36,8 +37,16 @@ def courses_new():
         return "Acesso negado - apenas administrador", 403
 
     if request.method == 'GET':
+        
+        teachers = TeacherService.list_all_teachers()
+        
         # Renderiza formulário vazio
-        return render_template('course_form.html', course=None, action='new')
+        return render_template(
+            'course_form.html', 
+            course=None, 
+            action='new',
+            teachers=teachers
+        )
 
     # POST
     nome = request.form.get('nome')
@@ -46,7 +55,8 @@ def courses_new():
     if not nome:
         return "Nome é obrigatório", 400
 
-    CourseService.create_course(nome, descricao)
+    teacher_id = request.form.get('teacher_id')
+    CourseService.create_course(nome, descricao, teacher_id)
     return redirect(url_for('course_bp.courses_list'))
 
 
@@ -65,8 +75,16 @@ def courses_edit(course_id):
         return "Turma não encontrada", 404
 
     if request.method == 'GET':
+        
+        teachers = TeacherService.list_all_teachers()
+        
         # Exibe formulário pré-preenchido
-        return render_template('course_form.html', course=course, action='edit')
+        return render_template(
+            'course_form.html', 
+            course=course, 
+            action='edit', 
+            teachers=teachers
+        )
 
     # POST (atualizar)
     nome = request.form.get('nome')
@@ -74,8 +92,10 @@ def courses_edit(course_id):
 
     if not nome:
         return "Nome é obrigatório", 400
+    
+    teacher_id = request.form.get('teacher_id')
 
-    CourseService.update_course(course_id, nome, descricao)
+    CourseService.update_course(course_id, nome, descricao, teacher_id)
     return redirect(url_for('course_bp.courses_list'))
 
 
